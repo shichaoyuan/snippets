@@ -1,29 +1,48 @@
 #!/usr/bin/env python
 
-"""Real time log files watcher supporting log rotation.
+"""
+Real time log files watcher supporting log rotation.
+Author: Giampaolo Rodola' <g.rodola [AT] gmail [DOT] com>
+License: MIT
+"""
 
-Author: Giampaolo Rodola' <g.rodola [AT] gmail [DOT] com>License: MIT"""
-
-import osimport timeimport errnoimport stat
+import os
+import time
+import errno
+import stat
 
 
 class LogWatcher(object):
-    """Looks for changes in all files of a directory.    This is useful for watching log file changes in real-time.    It also supports files rotation.
+    """Looks for changes in all files of a directory.
+    This is useful for watching log file changes in real-time.
+    It also supports files rotation.
 
     Example:
 
-    >>> def callback(filename, lines):    ...     print filename, lines    ...    >>> l = LogWatcher("/var/log/", callback)    >>> l.loop()    """
+    >>> def callback(filename, lines):
+    ...     print filename, lines
+    ...
+    >>> l = LogWatcher("/var/log/", callback)
+    >>> l.loop()
+    """
 
     def __init__(self, folder, callback, extensions=["log"], tail_lines=0):
         """Arguments:
 
-        (str) @folder:            the folder to watch
+        (str) @folder:
+            the folder to watch
 
-        (callable) @callback:            a function which is called every time a new line in a             file being watched is found;             this is called with "filename" and "lines" arguments.
+        (callable) @callback:
+            a function which is called every time a new line in a
+            file being watched is found;
+            this is called with "filename" and "lines" arguments.
 
-        (list) @extensions:            only watch files with these extensions
+        (list) @extensions:
+            only watch files with these extensions
 
-        (int) @tail_lines:            read last N lines from files being watched before starting        """
+        (int) @tail_lines:
+            read last N lines from files being watched before starting
+        """
         self.files_map = {}
         self.callback = callback
         self.folder = os.path.realpath(folder)
@@ -45,7 +64,9 @@ class LogWatcher(object):
         self.close()
 
     def loop(self, interval=0.1, async=False):
-        """Start the loop.        If async is True make one loop then return.        """
+        """Start the loop.
+        If async is True make one loop then return.
+        """
         while 1:
             self.update_files()
             for fid, file in list(self.files_map.iteritems()):
@@ -59,7 +80,10 @@ class LogWatcher(object):
         print line
 
     def listdir(self):
-        """List directory and filter files by extension.        You may want to override this to add extra logic or        globbling support.        """
+        """List directory and filter files by extension.
+        You may want to override this to add extra logic or
+        globbling support.
+        """
         ls = os.listdir(self.folder)
         if self.extensions:
             return [x for x in ls if os.path.splitext(x)[1][1:] \
