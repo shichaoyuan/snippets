@@ -3,7 +3,7 @@ import re
 #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
 #                      '$status $body_bytes_sent "$http_referer" '
 #                      '"$http_user_agent" "$http_x_forwarded_for"'
-#                      ' $http_x_yp_network_type'
+#                      ' $http_x_ab_network_type'
 #                      ' $request_time $upstream_response_time $request_length $bytes_sent';
 
 
@@ -17,12 +17,12 @@ parts = [
     r'(?P<body_bytes_sent>\S+)',
     r'"(?P<http_referer>.*)"',
     r'"(?P<http_user_agent>.*)"',
-	r'"(?P<http_x_forwarded_for>.*)"',
-	r'(?P<http_x_ab_network_type>\S+)',
-	r'(?P<request_time>\S+)',
-	r'(?P<upstream_response_time>\S+)',
-	r'(?P<request_length>\S+)',
-	r'(?P<bytes_sent>\S+)',
+    r'"(?P<http_x_forwarded_for>.*)"',
+    r'(?P<http_x_ab_network_type>\S+)',
+    r'(?P<request_time>\S+)',
+    r'(?P<upstream_response_time>\S+)',
+    r'(?P<request_length>\S+)',
+    r'(?P<bytes_sent>\S+)',
 	
 ]
 
