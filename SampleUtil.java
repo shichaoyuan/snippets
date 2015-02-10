@@ -64,7 +64,7 @@ public class SampleUtil {
             return null;
         }
 
-        List<T> result = new LinkedList<T>();
+        List<T> result = new ArrayList<T>();
         Random random = new Random();
         int i = 0;
         while (iter.hasNext()) {
